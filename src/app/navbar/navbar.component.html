@@ -1,0 +1,104 @@
+<nav>
+  <div class="nav-wrapper">
+    <a routerLink="/blogs" class="brand-logo"> Logo Here</a>
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
+      <li><a routerLink="/blogs" routerLinkActive="active">Blogs</a></li>
+      <li><a routerLink="/login" routerLinkActive="active" *ngIf="displayName == undefined">Login</a></li>
+      <li><a routerLink="/registration" routerLinkActive="active" *ngIf="displayName == undefined">Registration</a></li>
+      <li [ngClass]="{hide : displayName == undefined, show : displayName != undefined }">
+        <a class="dropdown-button user-dropdwn" data-activates="user-dropdwn">
+          <i class="material-icons right grey-text text-darken-4 m-none">arrow_drop_down</i>
+          <div id="disabled" type="text" style="text-transform: capitalize;"
+            class="validate grey-text text-darken-4 adjust right">
+            <span *ngIf="displayName != undefined">Hi {{displayName}}!</span>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<ul id="user-dropdwn" class="dropdown-content lighten-5">
+  <li><a (click)="ShowEditUserModal()" class="waves-effect"><span>Edit Profile</span></a></li>
+  <li class="divider"></li>
+  <li><a (click)="Logout()" *ngIf="displayName != undefined">Logout</a></li>
+</ul>
+
+<div id="editUserModel" class="modal w-35 m-h-85 p-5">
+
+
+  <div class="preloader-wrapper big active" *ngIf="isSubmitForm">
+    <div class="spinner-layer spinner-blue-only">
+      <div class="circle-clipper left">
+        <div class="circle"></div>
+      </div>
+      <div class="gap-patch">
+        <div class="circle"></div>
+      </div>
+      <div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-content">
+    <a class="modal-close  right" (click)="closePopup = true;" style="margin-top: 13px;color: #ffff;margin-right: 10px;"><i class="material-icons dp48"
+        style="font-size: 20px;">clear</i></a>
+    <span class="center-align">
+      <h5>My Details</h5>
+    </span>
+    <div class="row">
+      <form (ngSubmit)="updateDetails(userForm.value,userForm.valid)" #userForm="ngForm" novalidate>
+
+        <div class="row">
+
+          <div class="input-field col s12">
+            <input disabled name="username" type="text" id="username" autocomplete="false"
+              [(ngModel)]="updateUserRegistrationDetails.username" #username required ngControl="username">
+            <label for="username" [ngClass]="{active: username.value.length > 0}">User Name (you can not update user
+              name)</label>
+          </div>
+
+
+          <div class="input-field col s12">
+            <input name="name" type="text" id="name" autocomplete="false"
+              [(ngModel)]="updateUserRegistrationDetails.name" #name required ngControl="name">
+            <label for="name" [ngClass]="{active: name.value.length > 0}">Name</label>
+            <div class="error-text" *ngIf="name.value == '' && formIsValid">
+              Please enter name
+            </div>
+          </div>
+
+          <div class="input-field col s12">
+            <input name="oldpassword" type="password" id="oldpassword" autocomplete="false"
+              [(ngModel)]="updateUserRegistrationDetails.oldpassword" #oldpassword required ngControl="oldpassword">
+            <label for="oldpassword">Current Password</label>
+            <div class="error-text" *ngIf="oldpassword.value == '' && formIsValid">
+              Please enter current password
+            </div>
+            <div class="error-text" *ngIf="mismatchPassword">
+              Please enter correct current password
+            </div>
+          </div>
+
+          <div class="input-field col s12">
+            <input name="newpassword" type="password" id="newpassword" autocomplete="false"
+              [(ngModel)]="updateUserRegistrationDetails.newpassword" #newpassword required ngControl="newpassword">
+            <label for="newpassword">New password</label>
+            <div class="error-text" *ngIf="newpassword.value == '' && formIsValid">
+              Please enter new password
+            </div>
+          </div>
+
+          <div class="input-field col s12 p-none">
+            <button type="submit" class="btn waves-effect waves-light">Update</button>
+          </div>
+        </div>
+        <div class="left card-panel teal lighten-2 center-align white-text m-t-none m-b-15 success-error">
+          <span>&#10004;</span> &nbsp;{{validationMsg}}</div>
+
+      </form>
+    </div>
+
+  </div>
+
+</div>

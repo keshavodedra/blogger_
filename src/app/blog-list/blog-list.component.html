@@ -1,0 +1,71 @@
+<div class="row">
+  <div class="col s12">
+    <h4 class="header">Blog List</h4>
+    <ul>
+
+      <ng-container class="card horizontal" *ngFor="let item of ResponseToShow">
+        <li class="card horizontal">
+          <div class="card-image">
+            <img [routerLink]="['/blog',item.id]" src="{{item.avatar}}" class="list-img">
+          </div>
+          <div class="card-stacked">
+            <div class="card-content">
+              <a>
+                <h5 >{{item.username}}</h5>
+              </a>
+             
+              <span *ngIf="item.userid == userid" style="float: right;margin-top: -4%;cursor: pointer;" (click)="EditBlog(item.id)"> <i
+                  class="material-icons prefix">mode_edit</i></span>
+              <p [innerHTML]=item.description></p>
+              <a *ngIf="item.userid == userid" (click)="removeBlog(item.id)" class="right"
+                style="cursor: pointer;border: 1px solid;padding: 5px">Remove</a>
+              <p *ngIf="item.tags != ''"><b>Tags</b> : <small [innerHtml]="GenerateTags(item.tags)"></small></p>
+
+            </div>
+            <div class="card-action">
+              <a [routerLink]="['/blog',item.id]" routerLinkActive="active">Read Full Blog</a>
+            </div>
+
+          </div>
+        </li>
+      </ng-container>
+
+      <span *ngIf="loadingInProgress">
+        <div class="col s12  box border" *ngFor="let item of loop">
+
+          <h6 class="lead-item-name">
+            <div class="content-placeholder-text w-100">
+              <span class="content-placeholder-background"></span>
+            </div>
+          </h6>
+
+          <h6 class="lead-item-name">
+            <div class="content-placeholder-text w-100">
+              <span class="content-placeholder-background"></span>
+            </div>
+          </h6>
+
+          <h6 class="lead-item-name">
+            <div class="content-placeholder-text w-100">
+              <span class="content-placeholder-background"></span>
+            </div>
+          </h6>
+
+          <h6 class="lead-item-name">
+            <div class="content-placeholder-text w-100">
+              <span class="content-placeholder-background"></span>
+            </div>
+          </h6>
+
+          <h6 class="lead-item-name">
+            <div class="content-placeholder-text w-100">
+              <span class="content-placeholder-background"></span>
+            </div>
+          </h6>
+
+        </div>
+      </span>
+
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,104 @@
+<div class="row">
+  <div>
+    <h4>Blog Detail</h4>
+  </div>
+  <div *ngIf="isPageLoading">
+    <div class="preloader-wrapper big active">
+      <div class="spinner-layer spinner-blue-only">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div>
+        <div class="gap-patch">
+          <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col s12 detail-page" *ngIf="!isPageLoading">
+    <div class="card">
+      <div class="card-image">
+        <img src="{{avatar}}" class="detail-img">
+        <span class="card-title blog-detail">{{ postedBy}}</span>
+       
+        <span *ngIf="uId == userId" style="float: right;margin-top: -20%;cursor: pointer;" (click)="EditBlog(blogId)"> <i
+          class="material-icons prefix">mode_edit</i></span>
+        <p class="card-title blog-detail-date"><b>Posted On :</b> <span style="font-size:14px;">
+            {{createdAt | date : 'd MMM yyy'}}</span></p>
+      </div>
+
+      <div class="card-content">
+        <p [innerHTML]=description></p><br>
+        <a *ngIf="!ShowComment && !restrictComment" (click)="ShowCommentBox()" class="right"
+          style="cursor: pointer;">Comment <i class="material-icons left">comment</i></a>
+        <p *ngIf="tags != ''"><b style="color:#039be5">Tags</b> : <small [innerHtml]="GenerateTags(tags)"></small></p>
+      </div>
+
+    </div>
+
+    <div *ngIf="ShowComment">
+      <p-editor [(ngModel)]="Comment" name="CommentVal" [style]="{'height':'100px'}" [maxlength]=50>
+      </p-editor>
+      <a (click)="PostComment()" class="waves-effect waves-light btn right m-t-10">Post</a>
+    </div>
+    <div class="row"></div>
+    <!-- Comment List : Start -->
+
+    <div *ngIf="ShowCommentList">
+
+      <b>Comment(s)</b>
+      <div class="card comment-wrapper" *ngFor="let item of ResponseToShow">
+        <div class="card-content">
+          <p [innerHTML]=item.comment></p><br>
+          <span><b>By</b> : {{item.username}}</span><br>
+          <span><b>On</b> :{{item.createdAt | date : 'MMM d y h:mm:ss'}}</span>
+
+          <a *ngIf="item.userid == userId" (click)="removeComment(item.id)" class="right"
+            style="cursor: pointer;">Remove</a>
+        </div>
+      </div>
+    </div>
+    <span *ngIf="loadingInProgress">
+      <div class="col s12  box border" *ngFor="let item of loop">
+
+        <h6 class="lead-item-name">
+          <div class="content-placeholder-text w-100">
+            <span class="content-placeholder-background"></span>
+          </div>
+        </h6>
+
+        <h6 class="lead-item-name">
+          <div class="content-placeholder-text w-100">
+            <span class="content-placeholder-background"></span>
+          </div>
+        </h6>
+
+        <h6 class="lead-item-name">
+          <div class="content-placeholder-text w-100">
+            <span class="content-placeholder-background"></span>
+          </div>
+        </h6>
+
+        <h6 class="lead-item-name">
+          <div class="content-placeholder-text w-100">
+            <span class="content-placeholder-background"></span>
+          </div>
+        </h6>
+
+        <h6 class="lead-item-name">
+          <div class="content-placeholder-text w-100">
+            <span class="content-placeholder-background"></span>
+          </div>
+        </h6>
+
+      </div>
+    </span>
+
+
+
+    <!-- Comment List : End -->
+  </div>
+</div>

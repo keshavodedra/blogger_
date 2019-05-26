@@ -1,0 +1,58 @@
+<div class="row">
+    <div class="col s9 offset-m1" style="margin-top: 5%;">
+    <div class="card">
+      <div class="card-content">
+        <div class="row">
+          <div class="col s12">
+            <h4 class="center-align">Registration</h4>
+          </div>
+        </div>
+
+        <div class="row">
+          <form (ngSubmit)="onSubmit(regForm.value,regForm.valid)" #regForm="ngForm" novalidate>
+            <div class="col s12  p-l-none box">
+              <div class="detail-row nav-wrapper">
+                <div class="input-field custom-field detail detail-edit">
+                  <input name="name" autocomplete="false" [(ngModel)]="userRegistrationDetails.name" type="text" id="name" #name required
+                    ngControl="Name">
+                  <label for="name">Name</label>
+                  <div class="error-text" *ngIf="name.value == '' && formIsValid">
+                    Please enter Name
+                  </div>
+                </div>
+              </div>
+              <div class="detail-row nav-wrapper">
+                <div class="input-field custom-field detail detail-edit">
+                  <input name="username" autocomplete="false" [(ngModel)]="userRegistrationDetails.username" type="text" id="username"
+                    #username required ngControl="username" (keypress)="removeSpecialChar($event)" (keydown)="removeSpecialChar($event)">
+                  <label for="username">User Id</label>
+                  <div class="error-text" *ngIf="username.value == '' && formIsValid">
+                    Please enter user name
+                  </div>
+                </div>
+              </div>
+              <div class="detail-row nav-wrapper">
+                <div class="input-field custom-field detail detail-edit">
+                  <input name="password" type="password" id="password" #password
+                    [(ngModel)]="userRegistrationDetails.password" required ngControl="password">
+                  <label for="password">Password</label>
+                  <div class="error-text" *ngIf="password.value == '' && formIsValid">
+                    Please enter password
+                  </div>
+                </div>
+              </div>
+              <div class="input-field p-none col s12">
+                <button type="submit" class="btn waves-effect waves-light">Register</button>
+                <span class="m-l-10 right">already registered ? <a routerLink="/login"
+                    routerLinkActive="active">Login</a></span>
+              </div>
+              <div class="left card-panel teal lighten-2 center-align white-text m-t-none m-b-15 success-alert">
+                <span>&#10004;</span> &nbsp;Registration Details Saved Successfully</div>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
